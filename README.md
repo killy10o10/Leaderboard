@@ -14,7 +14,7 @@
 
 ## Live Demo
 
-- [App Live Link](https://killy10o10.github.io/ToDo-List/dist/)
+- [App Live Link](https://killy10o10.github.io/Leaderboard/)
 
 ## Getting Started
 
@@ -29,8 +29,8 @@ To get a local copy up and running follow these simple example steps.
 ### Setup
 
 - open a terminal
-- run ` git clone git@github.com:killy10o10/ToDo-List.git`
-- run ` cd ToDo-List`
+- run ` git clone git@github.com:killy10o10/Leaderboard.git`
+- run ` cd Leaderboard`
 - run `npm install`
 - run `npm run build`
 - run `npm run dev`
@@ -38,7 +38,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Usage
 
-- It can be used as storing Lists of Tasks to do.
+- It can be used to retrive scores from Leaderboard API.
 
 ## Authors
 
@@ -58,9 +58,7 @@ Contributions, issues, and feature requests are welcome!
 Give a ⭐️ if you like this project!
 
 ## Acknowledgments
-
 -Microverse community
-
 - Hat tip to Microverse's code reviewers and to everyone who reviewed my project and made suggestions.
 
 ## 📝 License
