@@ -17,14 +17,13 @@ $dark: #121614;
 
 body {
   font-family: 'Poppins', sans-serif;
-  display: grid;
-  place-items: center;
   padding: 32px;
   color: $dark;
 }
 
 h1 {
   font-size: 45px;
+  text-align: center;
 }
 
 button {
@@ -39,23 +38,29 @@ button {
 
 main {
   margin-top: 50px;
-  display: grid;
-  grid-template-columns: 500px 500px;
-  width: auto;
+  display: flex;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .refresh {
   display: flex;
+  align-self: center;
   gap: 80px;
 }
 
 #scores-display {
-  display: grid;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 50px;
   gap: 50px;
 
   .score-list {
     display: flex;
+    min-width: 500px;
     flex-direction: column;
     border: 3px solid $dark;
     box-shadow: $boxs rgba($dark, 0.2);
@@ -79,11 +84,10 @@ main {
 }
 
 #scores-add {
-  padding: 20px;
+  padding: 50px;
   position: relative;
 
   h2 {
-    position: absolute;
     left: 50%;
     top: 50%;
   }
@@ -91,7 +95,6 @@ main {
   form {
     display: grid;
     gap: 20px;
-    position: absolute;
     left: 50%;
     top: 70%;
 
