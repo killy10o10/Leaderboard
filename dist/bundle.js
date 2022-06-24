@@ -523,55 +523,37 @@ module.exports = styleTagTransform;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addScore": () => (/* binding */ addScore),
-/* harmony export */   "fetchScore": () => (/* binding */ fetchScore)
+/* harmony export */   "fetchScore": () => (/* binding */ fetchScore),
+/* harmony export */   "generateTemplate": () => (/* binding */ generateTemplate),
+/* harmony export */   "scoreList": () => (/* binding */ scoreList)
 /* harmony export */ });
-/* eslint-disable no-unused-vars */
-const gameId = 'SGzYdY5RH5N5jim7hk5I';
-const baseURL = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/';
 const scoreURL = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/SGzYdY5RH5N5jim7hk5I/scores';
-// `${baseURL + gameId}/scores/`;
-
-// Generate game ID
-const createGame = async () => {
-  await fetch(baseURL, {
-    method: 'POST',
-    body: JSON.stringify({
-      name: 'Quami game',
-    }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => (json));
-};
 
 const generateTemplate = (scores) => {
   const listContainer = document.querySelector('.score-list');
-
   listContainer.innerHTML += `<li>${scores.userName}: ${scores.score}</li>`;
 };
-
+const scoreList = [];
 // fetch added score from API
 const fetchScore = async () => {
-  await fetch(scoreURL)
-    .then((response) => response.json())
-    .then((json) => generateTemplate(json.result));
+  const response = await fetch(scoreURL);
+  const scores = await response.json();
+  const sortedList = await scores.result.sort((a, b) => b.score - a.score);
+  scoreList.length = 0;
+  sortedList.forEach((item) => {
+    scoreList.push(item);
+  });
 };
 
 // Push score to API
 const addScore = async (userName, score) => {
   await fetch(scoreURL, {
-    method: 'POST',
+    method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      userName, score,
-    }),
-  }).then((response) => response.json()).then((json) => {
-    fetchScore();
-  }).catch((error) => (error));
+    body: JSON.stringify({ userName, score }),
+  });
 };
 
 
@@ -664,20 +646,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.fetchScore)();
+const loadScores = async () => {
+  await (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.fetchScore)();
+  _modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.scoreList.forEach(_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.generateTemplate);
+};
+
+loadScores();
 
 const form = document.querySelector('#add-form');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-  const nameInput = document.querySelector('#user-name').value.trim();
-  const scoreInput = document.querySelector('#user-score').value;
-  (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.addScore)(nameInput, scoreInput);
+  const nameInput = document.querySelector('#user-name');
+  const scoreInput = document.querySelector('#user-score');
+  (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.addScore)(nameInput.value, scoreInput.value);
   form.reset();
 });
 
 document.querySelector('#refresh').addEventListener('click', () => {
-  (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.fetchScore)();
+  const listContainer = document.querySelector('.score-list');
+  listContainer.innerHTML = '';
+  loadScores();
 });
 })();
 
