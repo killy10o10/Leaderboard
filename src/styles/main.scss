@@ -19,6 +19,7 @@ body {
   font-family: 'Poppins', sans-serif;
   padding: 32px;
   color: $dark;
+  position: relative;
 }
 
 h1 {
@@ -42,6 +43,8 @@ main {
   padding: 20px;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
 }
 
 .refresh {
@@ -65,9 +68,14 @@ main {
     border: 3px solid $dark;
     box-shadow: $boxs rgba($dark, 0.2);
     transition: $transition;
+    color: $dark;
 
     :nth-child(odd) {
       background: #ddd;
+    }
+
+    :nth-child(even) {
+      background: #fff;
     }
 
     li {
@@ -91,8 +99,6 @@ main {
   form {
     display: grid;
     gap: 20px;
-    left: 50%;
-    top: 70%;
 
     input {
       border: 2px solid $light;
