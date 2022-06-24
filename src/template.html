@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderbaord</title>
+    <title>Leaderboard</title>
 </head>
 
 <body>
-        <h1>Leaderbaord</h1>
+        <h1>Leaderboard</h1>
         <!-- Display Scores Section -->
      <main>
             <section id="scores-display">
@@ -19,22 +19,15 @@
                     <button type="button" id="refresh">Refresh</button>
                 </div>
                 <ul class="score-list">
-                    <li><span>Name:</span> 100</li>
-                    <li><span>Name:</span>  20</li>
-                    <li><span>Name:</span> 50</li>
-                    <li><span>Name:</span>  78</li>
-                    <li><span>Name:</span>  125</li>
-                    <li><span>Name:</span>  178</li>
-                    <li><span>Name:</span>  77</li>
-                    <li><span>Name:</span>  42</li>
+                 <!-- Score List Goes Here -->
                 </ul>
             </section>
             <!-- Add Scores Section -->
             <section id="scores-add">
                 <h2>Add your score</h2>
                 <form id="add-form">
-                    <input type="text" placeholder="Your name" required>
-                    <input type="text" placeholder="Your score" required>
+                    <input type="text" id="user-name" placeholder="Your name" required>
+                    <input type="number" id="user-score" placeholder="Your score" required>
                     <button type="submit">Submit</button>
                 </form>
             </section>
