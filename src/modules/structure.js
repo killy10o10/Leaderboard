@@ -2,7 +2,7 @@ const scoreURL = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api
 
 const generateTemplate = (scores) => {
   const listContainer = document.querySelector('.score-list');
-  listContainer.innerHTML += `<li>${scores.userName}: ${scores.score}</li>`;
+  listContainer.innerHTML += `<li>${scores.user}: ${scores.score}</li>`;
 };
 const scoreList = [];
 // fetch added score from API
@@ -17,13 +17,13 @@ const fetchScore = async () => {
 };
 
 // Push score to API
-const addScore = async (userName, score) => {
+const addScore = async (user, score) => {
   await fetch(scoreURL, {
-    method: 'post',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ userName, score }),
+    body: JSON.stringify({ user, score }),
   });
 };
 
