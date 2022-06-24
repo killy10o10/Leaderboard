@@ -20,8 +20,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "*,\n*::after,\n*::before {\n  border: 0;\n  margin: 0;\n  padding: 0;\n  box-sizing: border-box;\n  list-style: none;\n}\n\nbody {\n  font-family: \"Poppins\", sans-serif;\n  padding: 32px;\n  color: #121614;\n}\n\nh1 {\n  font-size: 45px;\n  text-align: center;\n}\n\nbutton {\n  box-shadow: 3px 5px 8px 2px rgba(18, 22, 20, 0.2);\n  transition: all 250ms ease-out;\n  cursor: pointer;\n  padding: 10px;\n  width: 120px;\n  font-weight: 700;\n  border: 2px solid #121614;\n}\n\nmain {\n  margin-top: 50px;\n  display: flex;\n  padding: 20px;\n  justify-content: space-between;\n  align-items: center;\n}\n\n.refresh {\n  display: flex;\n  align-self: center;\n  gap: 80px;\n}\n\n#scores-display {\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: flex-start;\n  padding: 50px;\n  gap: 50px;\n}\n#scores-display .score-list {\n  display: flex;\n  min-width: 500px;\n  flex-direction: column;\n  border: 3px solid #121614;\n  box-shadow: 3px 5px 8px 2px rgba(18, 22, 20, 0.2);\n  transition: all 250ms ease-out;\n}\n#scores-display .score-list :nth-child(odd) {\n  background: #ddd;\n}\n#scores-display .score-list li {\n  display: flex;\n  padding: 10px;\n  align-items: center;\n  gap: 20px;\n}\n\n#scores-add {\n  padding: 50px;\n  position: relative;\n}\n#scores-add h2 {\n  left: 50%;\n  top: 50%;\n}\n#scores-add form {\n  display: grid;\n  gap: 20px;\n  left: 50%;\n  top: 70%;\n}\n#scores-add form input {\n  border: 2px solid #ddd;\n  padding: 10px;\n  color: #121614;\n  width: 430px;\n  font-family: inherit;\n  font-size: inherit;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -511,6 +512,53 @@ function styleTagTransform(css, styleElement) {
 
 module.exports = styleTagTransform;
 
+/***/ }),
+
+/***/ "./src/modules/structure.js":
+/*!**********************************!*\
+  !*** ./src/modules/structure.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addScore": () => (/* binding */ addScore),
+/* harmony export */   "fetchScore": () => (/* binding */ fetchScore),
+/* harmony export */   "generateTemplate": () => (/* binding */ generateTemplate),
+/* harmony export */   "scoreList": () => (/* binding */ scoreList)
+/* harmony export */ });
+const scoreURL = 'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/SGzYdY5RH5N5jim7hk5I/scores';
+
+const generateTemplate = (scores) => {
+  const listContainer = document.querySelector('.score-list');
+  listContainer.innerHTML += `<li>${scores.user}: ${scores.score}</li>`;
+};
+const scoreList = [];
+// fetch added score from API
+const fetchScore = async () => {
+  const response = await fetch(scoreURL);
+  const scores = await response.json();
+  const sortedList = await scores.result.sort((a, b) => b.score - a.score);
+  scoreList.length = 0;
+  sortedList.forEach((item) => {
+    scoreList.push(item);
+  });
+};
+
+// Push score to API
+const addScore = async (user, score) => {
+  await fetch(scoreURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ user, score }),
+  });
+};
+
+
+
+
 /***/ })
 
 /******/ 	});
@@ -594,7 +642,32 @@ var __webpack_exports__ = {};
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_main_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles/main.scss */ "./src/styles/main.scss");
+/* harmony import */ var _modules_structure_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/structure.js */ "./src/modules/structure.js");
 
+
+
+const loadScores = async () => {
+  await (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.fetchScore)();
+  _modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.scoreList.forEach(_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.generateTemplate);
+};
+
+loadScores();
+
+const form = document.querySelector('#add-form');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nameInput = document.querySelector('#user-name');
+  const scoreInput = document.querySelector('#user-score');
+  (0,_modules_structure_js__WEBPACK_IMPORTED_MODULE_1__.addScore)(nameInput.value, scoreInput.value);
+  form.reset();
+});
+
+document.querySelector('#refresh').addEventListener('click', () => {
+  const listContainer = document.querySelector('.score-list');
+  listContainer.innerHTML = '';
+  loadScores();
+});
 })();
 
 /******/ })()
